@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<menu>
+  <item>
+    <path>civicrm/formulaireinvidivu</path>
+    <page_callback>CRM_Formulaires_Form_FormulaireIndividu</page_callback>
+    <title>FormulaireIndividu</title>
+    <access_arguments>access CiviCRM</access_arguments>
+  </item>
+  <item>
+    <path>civicrm/formulaire-individu</path>
+    <page_callback>CRM_Formulaires_Form_FormulaireIndividu</page_callback>
+    <title>FormulaireIndividu</title>
+    <access_arguments>access CiviCRM</access_arguments>
+  </item>
+  <item>
+    <path>civicrm/formulaire-foyer</path>
+    <page_callback>CRM_Formulaires_Form_FormulaireFoyer</page_callback>
+    <title>FormulaireFoyer</title>
+    <access_arguments>access CiviCRM</access_arguments>
+  </item>
+  <item>
+    <path>civicrm/ConfirmationFoyer</path>
+    <page_callback>CRM_Formulaires_Page_FormulaireFoyerConfirmation</page_callback>
+    <title>FormulaireFoyerConfirmation</title>
+    <access_arguments>access CiviCRM</access_arguments>
+  </item>
+  <item>
+    <path>civicrm/confirmation-creation-foyer</path>
+    <page_callback>CRM_Formulaires_Page_ConfirmationCreationFoyer</page_callback>
+    <title>ConfirmationCreationFoyer</title>
+    <access_arguments>access CiviCRM</access_arguments>
+  </item>
+</menu>
