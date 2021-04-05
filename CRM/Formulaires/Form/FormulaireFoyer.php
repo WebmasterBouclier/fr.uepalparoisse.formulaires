@@ -75,9 +75,9 @@ class CRM_Formulaires_Form_FormulaireFoyer extends CRM_Core_Form {
 	$this->addEntityRef(
 		'quartier',
 		ts('Quartier (distribution, visiteurs, ...)'),
-		['entity' => 'OptionValue',
+		['entity' => 'option_value',
 		'api' => [
-			'params' => ['option_group_id' => '100'],
+			'params' => ['option_group_id' => 'quartier'],
 			],
 		]);	
 
@@ -117,10 +117,28 @@ class CRM_Formulaires_Form_FormulaireFoyer extends CRM_Core_Form {
     }
 
 	// création du Foyer
+
+	/* Récupération des ID des Custom Fields */
+	$listCustomFieldsHousehold = array();	
+
+	$getListCustomFieldsHousehold = civicrm_api3('CustomField', 'get', [
+		'sequential' => 1,
+		'return' => ["name"],
+		'options' => ['limit' => 0],
+		]); 
+
+	/* transformation de la liste pour avoir le nom en premier et l'id derrière */
+	for($i=0; $i<($getListCustomFieldsHousehold['count']);$i++) {
+		$j = $getListCustomFieldsHousehold['values'][$i]['name'];
+		$listCustomFieldsHousehold[$j] = 'custom_'.$getListCustomFieldsHousehold['values'][$i]['id'];
+	} 
+
+	/* Création du Foyer dans l'API */
     try {
       $newHousehold = civicrm_api3('Contact', 'create', [
 		'contact_type' => "Household",
 		'household_name' => $params['household_name'],
+		$listCustomFieldsHousehold["quartier"] => $params['quartier'],
 		]);
       CRM_Core_Session::setStatus(' Household in database saved', ' Household saved', 'success');
     }
@@ -144,7 +162,6 @@ $famille['household_id'] = $newHousehold['id'];
 		'city' => $params['city'],
 		'state_province_id' => $params['state_province_id'],
 		'country_id' => $params['country_id'],
-		'custom_31' => $params['quartier'], // A changer		
 		]);
       CRM_Core_Session::setStatus(' Household adresse in database saved', ' Adresse saved', 'success');
     }
@@ -170,7 +187,7 @@ $famille['household_adress_id'] = $newHouseholdAdress['id'];
     }	
 
 $famille['household_phone_id'] = $newHouseholdPhone['id'];
-	
+
 	
     parent::postProcess();
   }
